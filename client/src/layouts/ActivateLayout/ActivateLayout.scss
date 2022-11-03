@@ -1,0 +1,21 @@
+@import "../../utils/variables/variables.scss";
+
+.activate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: $purple-dark;
+    height: 100vh;
+    p {
+        padding: 0.4em;
+        font-size: 1.8rem;
+        color: $yellow;
+        letter-spacing: 0.02em;
+        transition: all 0.2s linear;
+        cursor: pointer;
+        &:hover {
+            color: $pink;
+        }
+    }
+}
