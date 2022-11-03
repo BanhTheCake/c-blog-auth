@@ -1,0 +1,88 @@
+@import "../../utils/variables/variables.scss";
+
+$authLayout-height: 100vh;
+
+$authLayout-logo-width: 150px;
+$authLayout-logo-width: 150px;
+$authLayout-logo-padding: 2em;
+$authLayout-logo-radius: 50%;
+$authLayout-logo-mb: 2em;
+
+$authLayout-actions-width: 370px;
+
+.authLayout {
+    height: $authLayout-height;
+    background-color: $purple-dark;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &__logo {
+        width: $authLayout-logo-width;
+        height: $authLayout-logo-width;
+        padding: $authLayout-logo-padding;
+        border-radius: $authLayout-logo-radius;
+        margin-bottom: $authLayout-logo-mb;
+
+        animation: UpAndDown 2s linear infinite;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    &__actions {
+        font-size: 1rem;
+        letter-spacing: 0.02em;
+        max-width: 100%;
+
+        width: $authLayout-actions-width;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        & p {
+            padding: 0.5em 0;
+            cursor: pointer;
+            user-select: none;
+
+            &:hover {
+                transition: all 0.1s ease;
+                opacity: 0.8;
+            }
+        }
+        & .yellow {
+            color: $yellow;
+        }
+
+        & .pink {
+            color: $pink;
+        }
+    }
+}
+
+@keyframes UpAndDown {
+    0% {
+        box-shadow: 0px 5px 15px 0 $purple-lighter;
+        transform: translateY(-10px);
+    }
+    25% {
+        box-shadow: 0px 5px 10px 0 $purple-lighter;
+        transform: translateY(-5px);
+    }
+    50% {
+        box-shadow: 0px 5px 5px 0 $pink;
+        transform: translateY(0px);
+    }
+    75% {
+        box-shadow: 0px 5px 10px 0 $pink;
+        transform: translateY(-5px);
+    }
+    100% {
+        box-shadow: 0px 5px 15px 0 $pink;
+        transform: translateY(-10px);
+    }
+}
