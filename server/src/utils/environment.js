@@ -11,7 +11,9 @@ const env = {
     GOOGLE_ADMIN: process.env.GOOGLE_ADMIN,
     CLIENT_URL: process.env.CLIENT_URL,
     ACCESS_TOKEN_EX: process.env.ACCESS_TOKEN_EX,
-    REFRESH_TOKEN_EX: process.env.REFRESH_TOKEN_EX
+    REFRESH_TOKEN_EX: process.env.REFRESH_TOKEN_EX,
+    FORGOT_TOKEN: process.env.FORGOT_TOKEN,
+    FORGOT_TOKEN_EX: process.env.FORGOT_TOKEN_EX,
 }
 
 module.exports = env

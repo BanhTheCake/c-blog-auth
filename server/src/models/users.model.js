@@ -17,6 +17,11 @@ const userSchema = new Schema({
         trim: true,
         required: [true, 'Gmail must be required !']
     },
+    token: {
+        type: String,
+        trim: true,
+        default: null
+    }
 }, {
     timestamps: true,
     collection: 'users'

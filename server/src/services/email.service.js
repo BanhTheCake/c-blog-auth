@@ -11,7 +11,7 @@ myOAuth2Client.setCredentials({
     refresh_token: env.GOOGLE_REFRESH_TOKEN,
 });
 
-const sendRegister = async (data = {}) => {
+const sendEmail = async (data = {}) => {
     try {
         const { to, title, url } = data;
         if ( !to || !title || !url) throw new Error('Missing params');
@@ -44,4 +44,4 @@ const sendRegister = async (data = {}) => {
     }
 };
 
-module.exports = { sendRegister };
+module.exports = { sendEmail };
