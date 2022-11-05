@@ -1,0 +1,51 @@
+@import "../../utils/variables/variables.scss";
+
+.navbar-wrapper {
+    background-color: $semi-white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+}
+.navbar {
+    height: $navbar-height;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__logo {
+        height: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .img-wrapper {
+            height: calc(100% - 20px);
+            display: flex;
+
+            img {
+                height: 100%;
+                margin-right: 0.6em;
+            }
+        }
+        .navbar__logo-text {
+            color: $pink;
+            letter-spacing: 0.22em;
+            font-size: 1rem;
+        }
+    }
+    &__avatar {
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        overflow: hidden;
+        height: calc(100% - 20px);
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}

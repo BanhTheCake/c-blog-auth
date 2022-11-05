@@ -6,6 +6,11 @@ $pink: #f96a8b;
 $yellow: #fbc02d;
 $blue: #2196f3;
 $green: #009688;
+$semi-white: rgba(255, 255, 255, 0.15);
+
+// Components
+$navbar-height: 60px;
+$sidebar-width: 200px;
 
 @mixin for-tablet {
     @media (min-width: 768px) {
