@@ -1,0 +1,65 @@
+@import "../../utils/variables/variables.scss";
+
+.sidebar-wrapper {
+    position: sticky;
+    position: -webkit-sticky;
+    top: calc($navbar-height + 2em);
+    left: 0;
+    width: $sidebar-width;
+    flex-shrink: 0;
+
+    .sidebar {
+        border-radius: 6px;
+        padding: 2em;
+        padding-left: 3em;
+
+        background-color: $semi-white;
+
+        .sidebar-tag {
+            color: $purple-lighter;
+
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+
+            svg {
+                font-size: 1.4rem;
+            }
+
+            p {
+                margin-left: 0.6em;
+                letter-spacing: 0.04em;
+                line-height: 1.6em;
+
+                text-transform: capitalize;
+            }
+
+            &:not(:last-child) {
+                margin-bottom: 1em;
+            }
+
+            &.blue {
+                svg {
+                    color: $blue;
+                }
+            }
+
+            &.yellow {
+                svg {
+                    color: $yellow;
+                }
+            }
+
+            &.red {
+                svg {
+                    color: $pink;
+                }
+            }
+
+            &:hover {
+                opacity: 0.8;
+                transition: all 0.2s linear;
+            }
+        }
+    }
+}
