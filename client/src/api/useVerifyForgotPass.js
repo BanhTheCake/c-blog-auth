@@ -22,8 +22,6 @@ const useVerifyForgotPass = (token, config) => {
     };
     const objectQuery = useQuery(['Verify Forgot Token', token], handleVerify, {
         enabled: !!token,
-        refetchOnWindowFocus: false,
-        retry: 0,
         ...config,
     });
     return objectQuery;

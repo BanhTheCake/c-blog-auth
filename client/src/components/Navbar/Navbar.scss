@@ -6,7 +6,30 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 2;
+    z-index: 10;
+    .menu-mobile {
+        position: absolute;
+        top: calc(100% + $padding-main-top);
+        right: 15px;
+        display: none;
+        z-index: 10;
+        animation: fadeIn 0.1s linear;
+        @media screen and (max-width: 1000px) {
+            display: flex;
+        }
+        @media screen and (max-width: 450px) {
+            width: calc(100% - $padding-lr - $padding-lr);
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background-color: transparent;
+        }
+    }
 }
 .navbar {
     height: $navbar-height;
@@ -23,12 +46,13 @@
         align-items: center;
 
         .img-wrapper {
-            height: calc(100% - 20px);
+            width: $img-width;
+            height: $img-height;
             display: flex;
+            margin-right: 0.8em;
 
             img {
                 height: 100%;
-                margin-right: 0.6em;
             }
         }
         .navbar__logo-text {
@@ -38,10 +62,12 @@
         }
     }
     &__avatar {
-        aspect-ratio: 1/1;
+        height: $img-width;
+        width: $img-height;
         border-radius: 50%;
         overflow: hidden;
-        height: calc(100% - 20px);
+        flex-shrink: 0;
+        cursor: pointer;
         img {
             width: 100%;
             height: 100%;

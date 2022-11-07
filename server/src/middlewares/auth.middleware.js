@@ -30,11 +30,7 @@ const checkValidUserToken = async (req, res, next) => {
         await currentUser.save();
         next();
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({
-            errCode: -1,
-            message: error?.message || 'Something wrong with server !',
-        });
+        next(error)
     }
 };
 
@@ -62,27 +58,7 @@ const verifyToken = async (req, res, next) => {
         req.id = decodeData.id;
         next();
     } catch (error) {
-        if (
-            error?.message === 'invalid signature'
-        ) {
-            return res.status(400).json({
-                errCode: -2,
-                message: 'You are not authenticated !',
-            });
-        }
-
-        if (error?.message === 'jwt expired') {
-            return res.status(400).json({
-                errCode: -3,
-                message: 'jwt expired',
-            });
-        }
-
-        console.log(error);
-        return res.status(500).json({
-            errCode: -1,
-            message: error?.message || 'Something wrong with server !',
-        });
+        next(error)
     }
 };
 

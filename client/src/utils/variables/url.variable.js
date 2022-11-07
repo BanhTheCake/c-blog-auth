@@ -10,6 +10,7 @@ const URL_AUTH_RF_TOKEN = `${URL_AUTH}/refreshToken`;
 const URL_AUTH_LOGOUT = `${URL_AUTH}/logout`;
 const URL_FORGOT_PASSWORD = `${URL_AUTH}/forgotPassword`;
 const URL_RESET_PASSWORD = `${URL_AUTH}/resetPassword`;
+const URL_SEND_ACCESS_TOKEN_GOOGLE = `${URL_AUTH}/send-accessToken-google`;
 
 // Users
 const URL_USERS = `${URL_BASE_V1}/users`;
@@ -27,5 +28,6 @@ export {
     URL_RESET_PASSWORD,
     URL_GET_INFO,
     URL_TEST,
-    URL_UPDATE_INFO
+    URL_UPDATE_INFO,
+    URL_SEND_ACCESS_TOKEN_GOOGLE
 };

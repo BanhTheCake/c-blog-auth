@@ -1,20 +1,44 @@
 @import "../../utils/variables/variables.scss";
 
 $ProfilesLayout-gap: 1.4em;
+$img-user: 150px;
 
 .ProfilesLayout {
     background-color: $purple-dark;
     min-height: 100vh;
     .ProfilesLayout-content {
-        padding-top: calc($navbar-height + 2em);
+        padding-top: calc($navbar-height + $padding-main-top);
         position: relative;
         display: flex;
         align-items: flex-start;
+
+        .profilesLayout-sidebar {
+            position: sticky;
+            position: -webkit-sticky;
+            top: calc($navbar-height + $padding-main-top);
+            left: 0;
+            width: $sidebar-width;
+            flex-shrink: 0;
+
+            @media screen and (max-width: 1000px) {
+                display: none;
+            }
+        }
+
         .ProfilesLayout-main {
             padding-left: 2em;
             display: flex;
             align-items: stretch;
             padding-bottom: 2em;
+
+            @media screen and (max-width: 700px) {
+                flex-direction: column;
+            }
+
+            @media screen and (max-width: 1000px) {
+                padding-left: 0;
+            }
+
             .ProfilesLayout-main__blog {
                 flex: 1.3;
                 margin-right: 2em;
@@ -22,18 +46,29 @@ $ProfilesLayout-gap: 1.4em;
                 padding: 2em;
                 border-radius: 6px;
                 color: white;
+
+                @media screen and (max-width: 450px) {
+                    padding: 1em;
+                }
+
+                @media screen and (max-width: 700px) {
+                    margin-right: 0;
+                    margin-bottom: 2em;
+                }
+
                 .ProfilesLayout-main__blog-title {
                     display: flex;
                     align-items: center;
                     padding-bottom: $ProfilesLayout-gap;
+
                     & p {
                         font-size: 1.2rem;
                         padding-left: 0.8em;
                         font-weight: 500;
                     }
                     .img-wrapper {
-                        width: 46px;
-                        aspect-ratio: 1/1;
+                        width: $img-width;
+                        height: $img-height;
                         border-radius: 50%;
                         overflow: hidden;
                         img {
@@ -61,9 +96,14 @@ $ProfilesLayout-gap: 1.4em;
                 flex-direction: column;
                 align-items: center;
                 border-radius: 6px;
+
+                @media screen and (max-width: 450px) {
+                    padding: 1em;
+                }
+
                 .ProfilesLayout-main__user-ava {
-                    width: 150px;
-                    aspect-ratio: 1/1;
+                    width: $img-user;
+                    height: $img-user;
                     border-radius: 50%;
                     overflow: hidden;
                     margin-bottom: $ProfilesLayout-gap;

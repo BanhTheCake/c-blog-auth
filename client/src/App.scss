@@ -9,6 +9,7 @@
 
 body {
     font-family: "Prompt";
+    background-color: $purple-dark;
 }
 
 img {
@@ -20,5 +21,14 @@ img {
     max-width: 1440px;
     width: 100%;
     margin: 0 auto;
-    padding: 0 15px;
+    padding: 0 $padding-lr;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

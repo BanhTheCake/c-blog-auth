@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react';
-import Input from '../Form/Input/Input';
-import './Login.scss';
-import InputPassword from '../Form/InputPassword/InputPassword';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import useLogin from '../../api/useLogin';
-import { toast } from 'react-toastify'
-import { useDispatch } from "react-redux";
-
+import Input from '../Form/Input/Input';
+import InputPassword from '../Form/InputPassword/InputPassword';
+import './Login.scss';
+import { useGoogleLogin } from '@react-oauth/google';
+import useSendAccessTokenGoogle from '../../api/useSendAccessTokenGoogle';
 
 const schema = yup
     .object({
@@ -31,17 +32,25 @@ const Login = () => {
         resolver: yupResolver(schema),
     });
 
-    const dispatch = useDispatch()
-
     const onError = (err) => {
-        return toast.error(err.message)
-    }
+        return toast.error(err.message);
+    };
 
-    const { mutate: handleLogin, isLoading: isLogin } = useLogin({ onError })
+    const { mutate: handleLogin, isLoading: isLogin } = useLogin({ onError });
+
+    const { mutate: handleSendToken } = useSendAccessTokenGoogle({ onError });
 
     const onSubmit = (data) => {
-        handleLogin(data)
+        handleLogin(data);
     };
+
+    const handleLoginWithGoogle = useGoogleLogin({
+        onSuccess: (res) => {
+            const { access_token } = res;
+            handleSendToken({ access_token });
+        },
+        onError: (err) => console.log(err),
+    });
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="login">
@@ -59,8 +68,18 @@ const Login = () => {
                 name={'password'}
             />
             <div className="form-wrapper-btn">
-                <button className="form-btn">{ isLogin ? 'Login ...' : 'Log in' }</button>
-                <button className="form-btn">Sign in with Google</button>
+                <button className="form-btn">
+                    {isLogin ? 'Login ...' : 'Log in'}
+                </button>
+                <button
+                    onClick={(e) => {
+                        e.preventDefault();
+                        handleLoginWithGoogle();
+                    }}
+                    className="form-btn"
+                >
+                    Sign in with Google
+                </button>
             </div>
         </form>
     );

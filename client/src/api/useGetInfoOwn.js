@@ -26,8 +26,6 @@ const useGetInfoOwn = (config) => {
     };
 
     const objectQuery = useQuery(['Get Info Owner'], handleGetInfo, {
-        refetchOnWindowFocus: false,
-        retry: 0,
         ...config
     });
     return objectQuery

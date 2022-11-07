@@ -115,7 +115,9 @@ const ProfilesLayout = () => {
         <div className="ProfilesLayout">
             <Navbar />
             <div className="container ProfilesLayout-content">
-                <Sidebar />
+                <div className="profilesLayout-sidebar">
+                    <Sidebar />
+                </div>
                 <div className="ProfilesLayout-main">
                     <div className="ProfilesLayout-main__blog">
                         <h4 className="ProfilesLayout-main__blog-title">

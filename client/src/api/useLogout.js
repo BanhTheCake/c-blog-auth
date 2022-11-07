@@ -40,7 +40,6 @@ const useLogout = (config) => {
         onSuccess,
         onError,
         ...config,
-        retry: 0,
     });
     return objectQuery;
 };

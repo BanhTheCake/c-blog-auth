@@ -11,6 +11,10 @@ $semi-white: rgba(255, 255, 255, 0.15);
 // Components
 $navbar-height: 60px;
 $sidebar-width: 200px;
+$padding-lr: 15px;
+$padding-main-top: 2em;
+$img-width: 40px;
+$img-height: 40px;
 
 @mixin for-tablet {
     @media (min-width: 768px) {
