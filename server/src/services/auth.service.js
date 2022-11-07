@@ -11,7 +11,7 @@ const {
 const email = require('../services/email.service');
 const env = require('../utils/environment');
 const { v4: uuidv4 } = require('uuid');
-const { default: mongoose } = require('mongoose');
+const { default: mongoose, Promise } = require('mongoose');
 
 const saltRounds = 10;
 
@@ -27,7 +27,7 @@ const handleRegister = (data) => {
                 if (currentUser) {
                     return resolve({
                         errCode: 1,
-                        message: 'Gmail is exist !',
+                        message: 'Gmail is exist in out system !',
                     });
                 }
 
@@ -49,7 +49,7 @@ const handleRegister = (data) => {
 
                 return resolve({
                     errCode: 0,
-                    message: 'Ok'
+                    message: 'Ok',
                 });
             } catch (error) {
                 reject(error);
@@ -68,6 +68,15 @@ const handleActivate = (token) => {
                 return resolve({
                     errCode: 1,
                     message: 'Jwt is not valid',
+                });
+            }
+
+            const currentUser = await Users.findOne({ gmail: gmail }).exec();
+
+            if (currentUser) {
+                return resolve({
+                    errCode: 1,
+                    message: 'Gmail has been activated !',
                 });
             }
 
@@ -158,18 +167,27 @@ const handleForgotPassword = (gmail) => {
                 });
             }
 
+            // Generate userToken for validate when change password
+            const userToken = uuidv4();
+            currentUser.token = userToken;
+            const handleSave = currentUser.save();
+
             const activatedInTime = '5m';
+
             const forgotToken = createForgotToken(
-                { id: currentUser._id },
+                { id: currentUser._id, userToken },
                 activatedInTime
             );
+
             const url = `${env.CLIENT_URL}/auth/reset-password/${forgotToken}`;
 
-            await email.sendEmail({
+            const handleSend = email.sendEmail({
                 to: currentUser.gmail,
                 title: 'Click link below to reset your password !',
                 url,
             });
+
+            await Promise.all([handleSave, handleSend]);
 
             resolve({
                 errCode: 0,
@@ -185,17 +203,11 @@ const verifyForgotToken = (token) => {
     return new Promise(async (resolve, reject) => {
         try {
             const decodeData = decodeForgotToken(token);
-            // Generate userToken for validate when change password
-            const userToken = uuidv4();
-            await Users.findOneAndUpdate(
-                { _id: mongoose.Types.ObjectId(decodeData.id) },
-                { token: userToken }
-            ).exec();
 
             resolve({
                 errCode: 0,
                 message: 'Ok',
-                data: { id: decodeData.id, userToken: userToken },
+                data: decodeData,
             });
         } catch (error) {
             reject(error);
@@ -204,35 +216,37 @@ const verifyForgotToken = (token) => {
 };
 
 const handleResetPassword = (data) => {
-    return new Promise( async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
-            const currentUser = await Users.findOne({ _id: mongoose.Types.ObjectId(data.id) })
+            const currentUser = await Users.findOne({
+                _id: mongoose.Types.ObjectId(data.id),
+            });
             if (!currentUser) {
                 return resolve({
                     errCode: 1,
-                    message: 'User is not exist in out system'
-                })
+                    message: 'User is not exist in out system',
+                });
             }
             bcrypt.hash(data.password, saltRounds, async (err, hash) => {
                 try {
-                    if (err) reject(err)
+                    if (err) reject(err);
 
-                    currentUser.password = hash
-                    await currentUser.save()
+                    currentUser.password = hash;
+                    await currentUser.save();
 
                     resolve({
                         errCode: 0,
-                        message: 'Change password complete !'
-                    })
+                        message: 'Change password complete !',
+                    });
                 } catch (error) {
-                    reject(error)
+                    reject(error);
                 }
-            })
+            });
         } catch (error) {
-            reject(error)
+            reject(error);
         }
-    })
-}
+    });
+};
 
 module.exports = {
     handleRegister,
@@ -241,5 +255,5 @@ module.exports = {
     handleNewToken,
     handleForgotPassword,
     verifyForgotToken,
-    handleResetPassword
+    handleResetPassword,
 };

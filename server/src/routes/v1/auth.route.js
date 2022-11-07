@@ -25,4 +25,6 @@ route.post(
     authController.resetPassword
 );
 
+route.get('/logout', authController.logout)
+
 module.exports = route;

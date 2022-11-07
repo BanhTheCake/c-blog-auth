@@ -44,7 +44,7 @@ const verifyToken = async (req, res, next) => {
             req.headers?.Authorization || req.headers?.authorization;
 
         if (!formatToken) {
-            return res.status(401).json({
+            return res.status(400).json({
                 errCode: -2,
                 message: 'You are not authenticated !',
             });
@@ -53,7 +53,7 @@ const verifyToken = async (req, res, next) => {
         const accessToken = formatToken.split(' ')[1];
 
         if (!accessToken) {
-            return res.status(401).json({
+            return res.status(400).json({
                 errCode: -2,
                 message: 'You are not authenticated !',
             });
@@ -65,14 +65,14 @@ const verifyToken = async (req, res, next) => {
         if (
             error?.message === 'invalid signature'
         ) {
-            return res.status(401).json({
+            return res.status(400).json({
                 errCode: -2,
                 message: 'You are not authenticated !',
             });
         }
 
         if (error?.message === 'jwt expired') {
-            return res.status(401).json({
+            return res.status(400).json({
                 errCode: -3,
                 message: 'jwt expired',
             });

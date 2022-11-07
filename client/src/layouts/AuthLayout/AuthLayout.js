@@ -4,6 +4,8 @@ import Login from '../../components/Login/Login';
 import Register from '../../components/Register/Register';
 import './AuthLayout.scss';
 
+
+
 const AuthLayout = () => {
     const [authStatus, setAuthStatus] = useState('login');
 

@@ -1,6 +1,6 @@
 @import "../../utils/variables/variables.scss";
 
-$authLayout-height: 100vh;
+$authLayout-min-height: 100vh;
 
 $authLayout-logo-width: 150px;
 $authLayout-logo-width: 150px;
@@ -11,8 +11,9 @@ $authLayout-logo-mb: 2em;
 $authLayout-actions-width: 370px;
 
 .authLayout {
-    height: $authLayout-height;
+    min-height: $authLayout-min-height;
     background-color: $purple-dark;
+    padding: 2em;
 
     display: flex;
     flex-direction: column;

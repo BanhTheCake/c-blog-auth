@@ -1,9 +1,9 @@
 @import "../../utils/variables/variables.scss";
 
 $ProfilesLayout-gap: 1.4em;
+
 .ProfilesLayout {
     background-color: $purple-dark;
-    color: white;
     min-height: 100vh;
     .ProfilesLayout-content {
         padding-top: calc($navbar-height + 2em);
@@ -21,6 +21,7 @@ $ProfilesLayout-gap: 1.4em;
                 background-color: $semi-white;
                 padding: 2em;
                 border-radius: 6px;
+                color: white;
                 .ProfilesLayout-main__blog-title {
                     display: flex;
                     align-items: center;

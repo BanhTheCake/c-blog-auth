@@ -16,7 +16,7 @@ const ResetLayout = () => {
                 <img src="./../../assets/img/logo.svg" alt="" />
             </div>
             <Reset />
-            <div className="authLayout__actions">
+            <div className="authLayout__actions reset-text">
                 <p className="pink" onClick={handleClickLogin}>
                     Login ?
                 </p>

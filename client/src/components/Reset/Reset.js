@@ -1,35 +1,91 @@
 import React, { useState } from 'react';
-import Input from '../Form/Input/Input';
 import './Reset.scss';
-import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
+import InputPassword from '../Form/InputPassword/InputPassword';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+import useVerifyForgotPass from '../../api/useVerifyForgotPass';
+import useResetForgotPass from '../../api/useResetForgotPass';
+import { toast } from 'react-toastify';
+
+const schema = yup
+    .object({
+        password: yup
+            .string('Password must be a string !')
+            .required('Password must be required !'),
+        cfPassword: yup
+            .string('Confirm password must be a string !')
+            .required('Confirm password must be required !')
+            .oneOf([yup.ref('password')], 'Confirm passwords do not match !'),
+    })
+    .required();
 
 const Reset = () => {
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(schema),
+    });
 
-    const [isPassword, setIsPassword] = useState(true)
+    const { token } = useParams();
 
-    const handleClick = () => {
-        setIsPassword(!isPassword)
-    }
+    const {
+        isLoading: isVerifyToken,
+        isError,
+        data: dataToken,
+    } = useVerifyForgotPass(token, {
+        select: (resData) => resData.data,
+    });
+
+    const onSuccessReset = (data) => {
+        toast.success('Change password complete !');
+    };
+
+    const { mutate: handleResetPass, isLoading: isResetPass, isError: isResetError } =
+        useResetForgotPass({
+            onSuccess: onSuccessReset,
+        });
+
+    const onSubmit = (data) => {
+        const newData = {
+            password: data?.password,
+            id: dataToken?.id,
+            userToken: dataToken?.userToken,
+        };
+        handleResetPass(newData);
+    };
 
     return (
-        <form className="reset">
-            <Input
-                type={isPassword ? 'password' : 'text' }
-                placeholder={'Password'}
-                icon={isPassword ? <AiFillEyeInvisible /> : <AiFillEye /> }
-                handleClick={handleClick}
-            />
-            <Input
-                type={isPassword ? 'password' : 'text' }
-                placeholder={'Confirm password'}
-                icon={isPassword ? <AiFillEyeInvisible /> : <AiFillEye /> }
-                handleClick={handleClick}
-                name={'confirmPassword'}
-            />
-            <div className="form-wrapper-btn">
-                <button className='form-btn'>Save</button>
-            </div>
-        </form>
+        <>
+            {isError || isResetError ? (
+                <div className="reset-error">
+                    Link has been expired or not exist !
+                </div>
+            ) : (
+                <>
+                    <form onSubmit={handleSubmit(onSubmit)} className="reset">
+                        <InputPassword
+                            placeholder={'Password'}
+                            name={'password'}
+                            control={control}
+                            errors={errors}
+                        />
+                        <InputPassword
+                            placeholder={'Confirm Password'}
+                            name={'cfPassword'}
+                            control={control}
+                            errors={errors}
+                        />
+                        <div className="form-wrapper-btn">
+                            <button className="form-btn">Save</button>
+                        </div>
+                    </form>
+                </>
+            )}
+        </>
     );
 };
 

@@ -1,5 +1,10 @@
 @import "../../utils/variables/variables.scss";
 
+.reset-error {
+    font-size: 2rem;
+    color: $yellow;
+}
+
 .reset {
     width: 370px;
     max-width: 100%;

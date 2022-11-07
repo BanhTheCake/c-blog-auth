@@ -1,28 +1,66 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Input from '../Form/Input/Input';
 import './Login.scss';
-import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
+import InputPassword from '../Form/InputPassword/InputPassword';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import useLogin from '../../api/useLogin';
+import { toast } from 'react-toastify'
+import { useDispatch } from "react-redux";
+
+
+const schema = yup
+    .object({
+        gmail: yup
+            .string('Gmail must be a string !')
+            .email('Gmail must be valid !')
+            .required('Gmail must be required !'),
+        password: yup
+            .string('Password must be a string !')
+            .required('Password must be required !'),
+    })
+    .required();
 
 const Login = () => {
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(schema),
+    });
 
-    const [isPassword, setIsPassword] = useState(true)
+    const dispatch = useDispatch()
 
-    const handleClick = () => {
-        setIsPassword(!isPassword)
+    const onError = (err) => {
+        return toast.error(err.message)
     }
 
+    const { mutate: handleLogin, isLoading: isLogin } = useLogin({ onError })
+
+    const onSubmit = (data) => {
+        handleLogin(data)
+    };
+
     return (
-        <form className="login">
-            <Input type={'text'} placeholder={'Email'} />
+        <form onSubmit={handleSubmit(onSubmit)} className="login">
             <Input
-                type={isPassword ? 'password' : 'text' }
+                control={control}
+                errors={errors}
+                type={'text'}
+                placeholder={'Gmail'}
+                name={'gmail'}
+            />
+            <InputPassword
+                control={control}
+                errors={errors}
                 placeholder={'Password'}
-                icon={isPassword ? <AiFillEyeInvisible /> : <AiFillEye /> }
-                handleClick={handleClick}
+                name={'password'}
             />
             <div className="form-wrapper-btn">
-                <button className='form-btn'>Log in</button>
-                <button className='form-btn'>Sign in with Google</button>
+                <button className="form-btn">{ isLogin ? 'Login ...' : 'Log in' }</button>
+                <button className="form-btn">Sign in with Google</button>
             </div>
         </form>
     );

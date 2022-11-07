@@ -29,7 +29,10 @@ const activateAccount = async (req, res) => {
                 message: errors,
             });
         }
-        if (error?.message === 'invalid signature' || error?.message === 'jwt expired') {
+        if (
+            error?.message === 'invalid signature' ||
+            error?.message === 'jwt expired'
+        ) {
             return res.status(401).json({
                 errCode: -2,
                 message: 'You are not authenticated !',
@@ -99,11 +102,14 @@ const getNewToken = async (req, res) => {
             errCode: 0,
             message: 'Ok',
             data: {
-                accessToken: newAccessToken
+                accessToken: newAccessToken,
             },
         });
     } catch (error) {
-        if (error?.message === 'invalid signature' || error?.message === 'jwt expired') {
+        if (
+            error?.message === 'invalid signature' ||
+            error?.message === 'jwt expired'
+        ) {
             return res.status(401).json({
                 errCode: -2,
                 message: 'You are not authenticated !',
@@ -133,9 +139,7 @@ const verifyForgotToken = async (req, res) => {
         const resData = await authServices.verifyForgotToken(req.params.token);
         return res.status(200).json(resData);
     } catch (error) {
-        if (
-            error?.message === 'invalid signature'
-        ) {
+        if (error?.message === 'invalid signature') {
             return res.status(401).json({
                 errCode: -2,
                 message: 'You are not authenticated !',
@@ -157,16 +161,31 @@ const verifyForgotToken = async (req, res) => {
 
 const resetPassword = async (req, res) => {
     try {
-        const { id, password } = req.body
-        const resData = await authServices.handleResetPassword({ id, password })
-        return res.status(200).json(resData)
+        const { id, password } = req.body;
+        const resData = await authServices.handleResetPassword({
+            id,
+            password,
+        });
+        return res.status(200).json(resData);
     } catch (error) {
         return res.status(500).json({
             errCode: -1,
             message: error?.message || 'Something wrong with server !',
         });
     }
-}
+};
+
+const logout = (req, res) => {
+    try {
+        res.clearCookie('refreshToken');
+        return res.status(200).json({ errCode: 0, message: 'Ok' });
+    } catch (error) {
+        return res.status(500).json({
+            errCode: -1,
+            message: error?.message || 'Something wrong with server !',
+        });
+    }
+};
 
 module.exports = {
     register,
@@ -176,5 +195,6 @@ module.exports = {
     getNewToken,
     forgotPassword,
     verifyForgotToken,
-    resetPassword
+    resetPassword,
+    logout
 };

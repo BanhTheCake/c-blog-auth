@@ -3,12 +3,12 @@ const route = express.Router()
 const authRoute = require('./auth.route')
 const usersRoute = require('./users.route')
 
-route.get('/', (req ,res) => {
-    return res.json('halo banhTheCake')
-})
 
 route.use('/auth', authRoute)
 route.use('/users', usersRoute)
 
+// route.get('/', (req ,res) => {
+//     return res.json('halo banhTheCake')
+// })
 
 module.exports = route
