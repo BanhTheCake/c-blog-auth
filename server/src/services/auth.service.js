@@ -12,6 +12,7 @@ const email = require('../services/email.service');
 const env = require('../utils/environment');
 const { v4: uuidv4 } = require('uuid');
 const { default: mongoose, Promise } = require('mongoose');
+const axios = require('axios')
 
 const saltRounds = 10;
 
@@ -248,6 +249,49 @@ const handleResetPassword = (data) => {
     });
 };
 
+const accessTokenGoogle = (access_token) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            const res = await axios({
+                    method: 'get',
+                    url: env.GOOGLE_URL_GET_INFO_USER,
+                    params: {
+                        access_token: access_token
+                    }
+                })
+            const resData = res?.data
+            if (!resData || !Object.keys(resData).length) {
+                return resolve({
+                    errCode: 1,
+                    message: 'Something wrong with google !'
+                })
+            }
+            const { email } = resData;
+            let currentUser = await Users.findOne({ gmail: email }).exec();
+            if (!currentUser) {
+                const dataInsert = {
+                    username: email.split('@')[0],
+                    gmail: email,
+                    password: `${resData.sub}${email}`
+                };
+                currentUser = await Users.create({ ...dataInsert })
+            }
+
+            const copyCurrentUser = currentUser.toObject();
+            const refreshToken = createRefreshToken(
+                { id: copyCurrentUser._id },
+                env.REFRESH_TOKEN_EX
+            );
+            resolve({
+                errCode: 0,
+                data: refreshToken,
+            });
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports = {
     handleRegister,
     handleActivate,
@@ -256,4 +300,5 @@ module.exports = {
     handleForgotPassword,
     verifyForgotToken,
     handleResetPassword,
+    accessTokenGoogle
 };

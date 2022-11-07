@@ -22,9 +22,10 @@ const App = () => {
     // Get State isLogin in localStorage
     useSetLocalStorageLogin()
 
-    const { isLoading, isLogin } = useRefreshToken({}, 'check');
+    let { isLoading, isLogin } = useRefreshToken({}, 'check');
 
-    if (isLoading) {
+    
+    if (isLoading || isLogin === null) {
         return ( <div>Loading ... </div> )
     }
 

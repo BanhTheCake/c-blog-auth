@@ -7,6 +7,7 @@ const express = require('express');
 const app = express();
 const connectDB = require('./config/connectDB');
 const apiRouterV1 = require('./routes/v1/v1.routes');
+const handleError = require('./utils/handleError')
 
 const port = process.env.PORT || 8017;
 
@@ -34,6 +35,9 @@ const bootServer = () => {
 
     // Routes
     app.use('/api/v1', apiRouterV1);
+
+    // handle error
+    app.use(handleError)
 
     app.listen(port, () => {
         console.log(`Example app listening on port ${port}`);

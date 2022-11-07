@@ -34,15 +34,13 @@ const useRefreshToken = (config, type = 'refresh') => {
 
     if (type === 'check') {
         finalConfig = {
-            enabled: isLogin,
+            enabled: !!isLogin,
             onSuccess: (resData) => {
                 dispatch(setAccessToken(resData.data.accessToken));
             },
             onError: (err) => {
                 handleLogout();
             },
-            refetchOnWindowFocus: false,
-            retry: 0,
             staleTime: 0,
             cacheTime: 0,
             ...config,
@@ -58,8 +56,6 @@ const useRefreshToken = (config, type = 'refresh') => {
             onError: (err) => {
                 handleLogout();
             },
-            refetchOnWindowFocus: false,
-            retry: 0,
             staleTime: 0,
             cacheTime: 0,
             ...config,

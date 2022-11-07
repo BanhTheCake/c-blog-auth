@@ -23,7 +23,7 @@ const useActivateAccount = (token, config) => {
     const objectQuery = useQuery(
         ['Activated Account', token],
         handleActivated,
-        { refetchOnWindowFocus: false, retry: 0, ...config }
+        { ...config }
     );
     return objectQuery;
 };

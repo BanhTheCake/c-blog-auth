@@ -1,19 +1,17 @@
 @import "../../utils/variables/variables.scss";
 
 .sidebar-wrapper {
-    position: sticky;
-    position: -webkit-sticky;
-    top: calc($navbar-height + 2em);
-    left: 0;
-    width: $sidebar-width;
-    flex-shrink: 0;
-
+    width: 100%;
     .sidebar {
         border-radius: 6px;
         padding: 2em;
         padding-left: 3em;
 
         background-color: $semi-white;
+
+        @media screen and (max-width: 1000px) {
+            background-color: $purple-main;
+        }
 
         .sidebar-tag {
             color: $purple-lighter;
