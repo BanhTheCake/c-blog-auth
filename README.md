@@ -9,7 +9,7 @@
     -   handle error with next(error) (expressJS)
     -   Refresh when access token expired
 
-# frontend:
+# Frontend:
 
 -   ReactJs
 -   store: redux + react-query
@@ -18,7 +18,7 @@
     -   Use scss for write style
     -   Sign with google
 
-# other:
+# Other:
 
 -   This project is mainly about authenticate
 -   Learn about how to handle forgot + reset password
@@ -27,4 +27,5 @@
 -   Sign in with google
 -   Custom hooks to write axios interceptor and react-query
 
-# Source/base: (https://www.youtube.com/channel/UC2rLlS8PqRBJtebcHsFRLzg)
+# Source/base: 
+-   (https://www.youtube.com/channel/UC2rLlS8PqRBJtebcHsFRLzg)
