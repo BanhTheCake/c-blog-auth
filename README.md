@@ -15,7 +15,7 @@
 -   store: redux + react-query
 -   api: axios (interceptor) (handle err not send when access token expired)
 -   form: react-hook-form and yup (for validation)
-    -   use Scss for write style
+    -   Use scss for write style
     -   Sign with google
 
 # other:
