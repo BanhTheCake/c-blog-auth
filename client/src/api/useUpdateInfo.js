@@ -1,4 +1,3 @@
-import axios from './axios';
 import { useMutation } from 'react-query';
 import { URL_UPDATE_INFO } from '../utils/variables/url.variable';
 import useAxiosPrivate from './useAxiosPrivate';

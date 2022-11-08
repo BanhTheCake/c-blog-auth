@@ -1,13 +1,8 @@
-import axios, { axiosClient } from './axios';
-import { useMutation, useQuery } from 'react-query';
-import { URL_GET_INFO, URL_TEST } from '../utils/variables/url.variable';
-import { useDispatch } from 'react-redux'
-import { setIsLogin } from '../app/auth.slice';
-import useAxiosPrivate from './useAxiosPrivate';
+import { axiosClient } from './axios';
+import { useQuery } from 'react-query';
+import { URL_TEST } from '../utils/variables/url.variable';
 
 const useTest = (config) => {
-
-    // const axiosPrivate = useAxiosPrivate()
 
     const handleTest = () => {
         return new Promise(async (resolve, reject) => {
@@ -23,16 +18,12 @@ const useTest = (config) => {
         });
     };
 
-    // const objectQuery = useQuery(['test'], handleTest, {
-    //     refetchOnWindowFocus: false,
-    //     refetchOnReconnect: false,
-    //     refetchOnMount: false,
-    //     staleTime: 0,
-    //     cacheTime: 0,
-    //     retry: 0,
-    //     ...config
-    // });
-    return handleTest
+    const objectQuery = useQuery(['test'], handleTest, {
+        staleTime: 0,
+        cacheTime: 0,
+        ...config
+    });
+    return objectQuery
 };
 
 export default useTest;
