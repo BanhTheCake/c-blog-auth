@@ -35,6 +35,7 @@ const InputPassword = ({
                 value={value}
                 onChange={onChange}
                 disabled={disabled}
+                autoComplete="true"
             />
             {errors[name] && (
                 <span className="error-msg">{errors[name].message}</span>

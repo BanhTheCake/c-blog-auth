@@ -25,7 +25,7 @@ route.post(
     authController.resetPassword
 );
 
-route.get('/logout', authController.logout)
-route.post('/send-accessToken-google', authController.accessTokenGoogle)
+route.get('/logout', authController.logout);
+route.post('/send-accessToken-google', authController.accessTokenGoogle);
 
 module.exports = route;

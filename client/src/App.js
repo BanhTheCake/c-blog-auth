@@ -1,15 +1,16 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { setLogger } from 'react-query';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import useRefreshToken from './api/useRefreshToken';
 import './App.scss';
+import Loading from './components/loading/Loading';
 import ActivateLayout from './layouts/ActivateLayout/ActivateLayout';
 import AuthLayout from './layouts/AuthLayout/AuthLayout';
 import ProfilesLayout from './layouts/Profiles/ProfilesLayout';
 import ResetLayout from './layouts/ResetLayout/ResetLayout';
-import { setLogger } from 'react-query';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import useSetLocalStorageLogin from './utils/useSetLocalStorageLogin';
-import useRefreshToken from './api/useRefreshToken';
 
 setLogger({
     log: () => {},
@@ -18,15 +19,17 @@ setLogger({
 });
 
 const App = () => {
-
     // Get State isLogin in localStorage
-    useSetLocalStorageLogin()
+    useSetLocalStorageLogin();
 
     let { isLoading, isLogin } = useRefreshToken({}, 'check');
 
-    
     if (isLoading || isLogin === null) {
-        return ( <div>Loading ... </div> )
+        return (
+            <div className="loading-page">
+                <Loading />
+            </div>
+        );
     }
 
     return (
