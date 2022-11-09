@@ -29,6 +29,8 @@ const login = async (req, res, next) => {
         res.cookie('refreshToken', refreshToken, {
             maxAge: 1000 * 60 * 15, // 15 minutes
             httpOnly: true,
+            sameSite: 'None',
+            secure: true
         });
         return res.status(200).json({
             errCode: 0,
@@ -62,6 +64,8 @@ const getNewToken = async (req, res, next) => {
         res.cookie('refreshToken', newRefreshToken, {
             maxAge: 1000 * 60 * 15, // 15 minutes
             httpOnly: true,
+            sameSite: 'None',
+            secure: true
         });
         return res.status(200).json({
             errCode: 0,
@@ -108,7 +112,11 @@ const resetPassword = async (req, res, next) => {
 
 const logout = (req, res, next) => {
     try {
-        res.clearCookie('refreshToken');
+        res.clearCookie('refreshToken', {
+            httpOnly: true,
+            sameSite: 'None',
+            secure: true
+        });
         return res.status(200).json({ errCode: 0, message: 'Ok' });
     } catch (error) {
         next(error)
@@ -126,6 +134,8 @@ const accessTokenGoogle = async (req, res, next) => {
         res.cookie('refreshToken', refreshToken, {
             maxAge: 1000 * 60 * 15, // 15 minutes
             httpOnly: true,
+            sameSite: 'None',
+            secure: true
         });
         return res.status(200).json({
             errCode: 0,
